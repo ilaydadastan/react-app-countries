@@ -1,6 +1,9 @@
 import React from "react";
+import LogButton from "./LogButton";
+
 
 const AboutUs = () =>{
+
     return(
         <div>
             <h3>About Us</h3>
@@ -10,4 +13,4 @@ const AboutUs = () =>{
 
 }
 
-export default AboutUs;
+export default LogButton(AboutUs);
