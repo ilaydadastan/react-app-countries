@@ -4,6 +4,7 @@ import Navbar from "./components/Navbar";
 import AboutUs from "./components/AboutUs";
 import Contact from "./components/Contact";
 import CountryList from "./components/CountryList";
+import Country from "./components/Country";
 
 
 function App() {
@@ -16,6 +17,7 @@ function App() {
             <Route path="/" element={<CountryList />} />
             <Route path="/about" element={<AboutUs />}  />
             <Route path="/contact" element={<Contact />} />
+            <Route path="/:name" element={<Country />} />
           </Routes>
         </div>
       </BrowserRouter>
