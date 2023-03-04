@@ -1,26 +1,45 @@
 import React from "react";
-import Data from "../Data";
-import {Link} from "react-router-dom";
-
+import CountryCard from "./CountryCard";
+import axios from "axios";
 class CountryList extends React.Component{
+    state = {
+        countries: []
+    }
+    componentDidMount() {
+        axios.get('https://restcountries.com/v3.1/all')
+            .then(rsp => {
+                this.setState({
+                    countries:rsp.data.slice(0,20)
+                })
+                console.log(rsp.data)
+            });
+    }
+
+    searchHandler =(e) =>{
+        //console.log(e.target.value)
+        axios.get('https://restcountries.com/v3.1/name/'+ e.target.value)
+            .then(res =>{
+                console.log(res.data)
+                this.setState({
+                    countries: res.data
+                })
+            })
+    }
+
     render(){
-        const countryList = Data.map((ct, i) =>{
-            let languageObject = Object.keys(ct.languages)[0];
+        const countryList = this.state.countries.map(ct =>{
             return (
-                <div className="card mb-1" key={ct.name.official}>
-                    <div className="card-body">
-                        <Link to = {'/' + ct.name.official}>
-                            <h5 className={"card-title"} >{i +'-'+ ct.name.official}</h5>
-                        </Link>
-                        <p>{ct.name.nativeName[languageObject].common}</p>
-                    </div>
-                </div>
+                <CountryCard country={ct} key={ct.name.official}/>
             )
         })
         return(
-            <div className="col-4">
-                {countryList}
+            <div className="container">
+                <input type="text" name='search' className="form-control mb-3" onChange={this.searchHandler} placeholder="Enter country name"></input>
+                <div className="row row-cols-1 row-cols-md-3 g-4">
+                    {countryList}
+                </div>
             </div>
+
         )
 
     }
